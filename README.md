@@ -18,7 +18,7 @@ A fast, Apple-style web app that estimates a student's **percent chance of admis
 
 - **Student profile:** unweighted GPA, course rigor, grade trend, SAT or ACT (or not submitting), extracurricular activities, and honors/awards. It is saved in your browser's `localStorage`.
 - **Live estimates:** every change instantly recalculates each school's chance, and the progress rings animate as it moves.
-- **Filter by major:** pick an intended major and only schools offering it are shown, each with its estimate. Search, sort (best chance / selectivity / name), and filter by Likely, Target, Reach, or Far Reach.
+- **Filter by major:** pick an intended major and only schools offering it are shown, each with its estimate. Search by name, city, state, or abbreviation (`UCLA`, `MIT`, `Georgia Tech`, `UPenn`…), sort (best chance / selectivity / name), and filter by Likely, Target, Reach, or Far Reach.
 - **Transparent scoring:** tap a school to see each factor's contribution (GPA, tests, rigor, trend, activities, awards) in a sheet.
 - **Native feel:** system font stack (SF Pro on Apple devices), grouped inset lists, segmented controls, toggles, steppers, bottom sheets with swipe-to-dismiss, a collapsing large-title navigation bar, an iOS tab bar on phones, and light/dark/system appearance.
 - **Responsive:** two columns on desktop and a tab-based layout on phones.
@@ -88,6 +88,7 @@ School data lives in [`public/data/colleges.json`](public/data/colleges.json), s
 {
   "id": "umich",
   "name": "University of Michigan",
+  "aliases": ["UMich", "UM", "Michigan"],
   "city": "Ann Arbor", "state": "MI", "type": "Public", "size": 33000,
   "acceptanceRate": 0.18,
   "gpa25": 3.80, "gpa75": 4.00,
@@ -99,7 +100,8 @@ School data lives in [`public/data/colleges.json`](public/data/colleges.json), s
 
 - `testPolicy` is `required`, `optional`, or `blind`. Use `null` SAT values for test-blind schools.
 - `majors` reference ids in the top-level `majors` array.
-- `npm test` validates the file's shape, including unknown majors and inverted ranges.
+- `aliases` (optional) are abbreviations and nicknames used by search. They match from the start, so `UC` finds UCLA, UC Berkeley, and UChicago. Aliases are hand-written because auto-generated acronyms collide: Brown and Boston University would both be "BU".
+- `npm test` validates the file's shape, including unknown majors, inverted ranges, and duplicate aliases.
 
 **The included figures are rounded approximations of publicly reported statistics.** They are for illustration only and have not been verified for any specific admissions cycle.
 
@@ -114,6 +116,7 @@ School data lives in [`public/data/colleges.json`](public/data/colleges.json), s
 │   ├── data/colleges.json     # ← replaceable school dataset
 │   └── js/
 │       ├── scoring.js         # ← the admission-chance model (pure functions)
+│       ├── search.js          # school search: names, places, abbreviations
 │       ├── store.js           # profile/UI state + localStorage
 │       ├── icons.js           # SF Symbols–style inline SVG icons
 │       ├── app.js             # entry: tabs, navbar, settings, boot
@@ -122,7 +125,7 @@ School data lives in [`public/data/colleges.json`](public/data/colleges.json), s
 │           ├── sheet.js       # iOS-style modal sheet
 │           ├── profile.js     # profile form + activity/award editors
 │           └── schools.js     # major filter, list, detail sheet
-├── tests/scoring.test.js      # node:test suite for the model + dataset
+├── tests/                     # node:test suites for the model, dataset, and search
 ├── scripts/screenshot.mjs     # regenerates README screenshots (needs Chrome)
 └── docs/screenshots/
 ```

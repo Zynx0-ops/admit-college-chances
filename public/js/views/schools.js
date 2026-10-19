@@ -3,6 +3,7 @@
 import { store } from '../store.js';
 import { icon } from '../icons.js';
 import { estimateAll, estimateChance } from '../scoring.js';
+import { matchesSchool } from '../search.js';
 import { WEIGHTS } from '../../config/weights.js';
 import { esc, pct, segmented, bindSegmented, ring, updateRing, CATEGORY_COLOR } from './components.js';
 import { openSheet } from './sheet.js';
@@ -36,7 +37,7 @@ export function mountSchools(root, data) {
       </button>
       <label class="search" id="search">
         ${icon('magnifyingglass', { size: 17 })}
-        <input type="search" id="search-input" placeholder="Search schools or states" autocomplete="off" aria-label="Search schools">
+        <input type="search" id="search-input" placeholder="Search schools (e.g. UCLA, MIT)" autocomplete="off" aria-label="Search schools">
         <button type="button" class="clear" aria-label="Clear search">${icon('xmark.circle.fill', { size: 17 })}</button>
       </label>
       ${segmented('sort', SORTS, ui.sort, { label: 'Sort by' })}
@@ -88,10 +89,7 @@ function render(root) {
 
   // 1. Filter by intended major, then estimate every remaining school.
   const offered = DATA.colleges.filter((c) => major === 'all' || c.majors.includes(major));
-  const q = search.trim().toLowerCase();
-  const searched = q
-    ? offered.filter((c) => `${c.name} ${c.city} ${c.state}`.toLowerCase().includes(q))
-    : offered;
+  const searched = offered.filter((c) => matchesSchool(c, search));
   const results = estimateAll(store.profile, searched);
 
   // 2. Category chips with live counts.
