@@ -2,6 +2,8 @@
 
 A fast, Apple-style web app that estimates a student's **percent chance of admission** at 48 U.S. colleges and filters schools by **intended major**. Change your GPA, course rigor, test scores, activities, or awards, and every school's estimate updates as you type.
 
+**Live demo: https://zynx0-ops.github.io/admit-college-chances/**
+
 > **These are estimates, not guarantees.** The model is a simple, transparent heuristic built on an approximate sample dataset. Real admissions weigh essays, recommendations, context, and institutional priorities that no calculator can see.
 
 ## Screenshots
@@ -23,6 +25,10 @@ A fast, Apple-style web app that estimates a student's **percent chance of admis
 - **Native feel:** system font stack (SF Pro on Apple devices), grouped inset lists, segmented controls, toggles, steppers, bottom sheets with swipe-to-dismiss, a collapsing large-title navigation bar, an iOS tab bar on phones, and light/dark/system appearance.
 - **Responsive:** two columns on desktop and a tab-based layout on phones.
 - **Zero dependencies:** plain HTML, CSS, and ES modules, plus a tiny Node static server.
+
+## Deployment
+
+Every push to `main` runs the tests and publishes the `public/` folder to GitHub Pages ([`.github/workflows/pages.yml`](.github/workflows/pages.yml)). The app is fully static, so the Node server is only needed for local development.
 
 ## Run it locally
 
