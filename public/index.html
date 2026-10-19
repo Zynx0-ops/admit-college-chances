@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+    <meta name="description" content="Estimate your chance of admission to colleges and filter schools by intended major." />
+    <title>Admit — College Chances</title>
+    <link rel="icon" href="icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app" id="app" data-tab="schools">
+      <!-- Profile pane (left column on desktop, "Profile" tab on mobile) -->
+      <section class="pane pane-profile" aria-label="Your profile">
+        <header class="navbar">
+          <div class="navbar-bar">
+            <span class="navbar-inline-title">Profile</span>
+            <button class="nav-btn" id="reset-btn" type="button">Reset</button>
+          </div>
+          <h1 class="large-title">Profile</h1>
+        </header>
+        <div class="pane-scroll" id="profile-root"></div>
+      </section>
+
+      <!-- Schools pane -->
+      <main class="pane pane-schools" aria-label="Schools">
+        <header class="navbar">
+          <div class="navbar-bar">
+            <span class="navbar-inline-title">Schools</span>
+            <button class="icon-btn" id="settings-btn" type="button" aria-label="Settings"></button>
+          </div>
+          <h1 class="large-title">Schools</h1>
+        </header>
+        <div class="pane-scroll" id="schools-root"></div>
+      </main>
+
+      <!-- iOS-style tab bar (mobile only) -->
+      <nav class="tabbar" aria-label="Sections">
+        <button type="button" class="tab" data-tab-target="profile"></button>
+        <button type="button" class="tab" data-tab-target="schools"></button>
+      </nav>
+    </div>
+
+    <div id="sheet-root"></div>
+    <script type="module" src="js/app.js"></script>
+  </body>
+</html>
